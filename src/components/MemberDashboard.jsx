@@ -464,7 +464,7 @@ export default function MemberDashboard() {
 
           {/* === EVENT CHAIN RIWAYAT MODAL === */}
           <Modal
-            open={showTitipModal}
+            open={showTitipanModal}
             onCancel={() => { setShowTitipanModal(false); setTitipanRiwayat([]); setSelectedTitipan(null); }}
             footer={<Button onClick={() => setShowTitipanModal(false)} style={{ fontWeight: 700 }}>Tutup</Button>}
             centered
