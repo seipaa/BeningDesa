@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Table, Input, Button, Row, Col, Space, Typography, Badge, Modal, Empty, Spin, Avatar, Statistic, Divider, message, Alert } from 'antd';
+import { Card, Table, Input, Button, Row, Col, Space, Typography, Badge, Modal, Empty, Spin, Avatar, Statistic, Divider, message, Alert, Tag } from 'antd';
 
 const { Title, Text, Paragraph } = Typography;
 
@@ -179,7 +179,7 @@ export default function MemberDashboard() {
               setTransactions([]);
               fetchMembers(searchQuery);
             }}
-            style={{ marginBottom: 20, borderRadius: 6, fontWeight: 600 }}
+            style={{ marginBottom: 20, borderRadius: 8, fontWeight: 700 }}
           >
             &lt;= KEMBALI KE PENCARIAN
           </Button>
@@ -197,12 +197,12 @@ export default function MemberDashboard() {
                   <Card
                     bordered={false}
                     style={{
-                      borderRadius: 16,
-                      background: 'linear-gradient(135deg, #065f46 0%, #15803d 100%)',
+                      borderRadius: 18,
+                      background: 'linear-gradient(135deg, #064e3b 0%, #059669 100%)',
                       color: '#fff',
                       position: 'relative',
                       overflow: 'hidden',
-                      boxShadow: '0 12px 20px -8px rgba(21, 128, 61, 0.4)',
+                      boxShadow: '0 12px 24px -10px rgba(5, 150, 105, 0.4)',
                       border: 'none',
                     }}
                     bodyStyle={{ padding: 24 }}
@@ -213,39 +213,39 @@ export default function MemberDashboard() {
                         style={{
                           width: 44,
                           height: 32,
-                          background: 'linear-gradient(135deg, #e2e8f0 0%, #94a3b8 100%)',
+                          background: 'linear-gradient(135deg, #f5e6c8 0%, #c4943b 100%)',
                           borderRadius: 6,
                           boxShadow: 'inset 0 1px 2px rgba(255,255,255,0.4)',
                         }}
                       />
-                      <Text style={{ color: '#fff', fontWeight: 800, fontSize: 13, letterSpacing: 1 }}>
+                      <Text style={{ color: '#fff', fontWeight: 900, fontSize: 13, letterSpacing: 1 }}>
                         KDMP MEMBER
                       </Text>
                     </div>
 
                     <div style={{ marginBottom: 28 }}>
-                      <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 10, textTransform: 'uppercase' }}>
+                      <Text style={{ color: 'rgba(255,255,255,0.75)', fontSize: 10, textTransform: 'uppercase', letterSpacing: 1 }}>
                         Nama Pemegang Kartu
                       </Text>
-                      <div style={{ fontSize: 20, fontWeight: 700, letterSpacing: '0.5px', marginTop: 2 }}>
+                      <div style={{ fontSize: 20, fontWeight: 900, letterSpacing: '0.5px', marginTop: 2, textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}>
                         {memberDetail.nama.toUpperCase()}
                       </div>
                     </div>
 
                     <Row>
                       <Col span={14}>
-                        <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 9, textTransform: 'uppercase' }}>
+                        <Text style={{ color: 'rgba(255,255,255,0.75)', fontSize: 9, textTransform: 'uppercase', letterSpacing: 0.5 }}>
                           RFID Serial No
                         </Text>
-                        <div style={{ fontFamily: 'monospace', fontSize: 14, fontWeight: 600, marginTop: 2 }}>
+                        <div style={{ fontFamily: 'monospace', fontSize: 14, fontWeight: 700, marginTop: 2 }}>
                           {memberDetail.rfid_card_id}
                         </div>
                       </Col>
                       <Col span={10} style={{ textAlign: 'right' }}>
-                        <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 9, textTransform: 'uppercase' }}>
+                        <Text style={{ color: 'rgba(255,255,255,0.75)', fontSize: 9, textTransform: 'uppercase', letterSpacing: 0.5 }}>
                           QR Code ID
                         </Text>
-                        <div style={{ fontSize: 13, fontWeight: 600, marginTop: 2 }}>
+                        <div style={{ fontSize: 13, fontWeight: 700, marginTop: 2 }}>
                           {memberDetail.qr_code_id}
                         </div>
                       </Col>
@@ -274,16 +274,16 @@ export default function MemberDashboard() {
                       title="Saldo Simpanan Koperasi"
                       value={memberDetail.saldo_simpanan}
                       formatter={formatRupiah}
-                      valueStyle={{ color: '#059669', fontWeight: 800 }}
+                      valueStyle={{ color: '#059669', fontWeight: 900 }}
                     />
                     <Divider style={{ margin: '12px 0' }} />
                     <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
                       <Text type="secondary">Koperasi Asal:</Text>
-                      <Text strong>{memberDetail.konsultasi_nama}</Text>
+                      <Text strong style={{ color: '#1e293b' }}>{memberDetail.konsultasi_nama}</Text>
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, marginTop: 6 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, marginTop: 8 }}>
                       <Text type="secondary">Wilayah:</Text>
-                      <Text strong>
+                      <Text strong style={{ color: '#1e293b' }}>
                         {memberDetail.desa}, {memberDetail.kecamatan}
                       </Text>
                     </div>
@@ -304,7 +304,7 @@ export default function MemberDashboard() {
                           title="Total Belanja"
                           value={totalSpent}
                           formatter={formatRupiah}
-                          valueStyle={{ color: '#dc2626', fontWeight: 800, fontSize: 15 }}
+                          valueStyle={{ color: '#dc2626', fontWeight: 900, fontSize: 16 }}
                         />
                       </Col>
                     </Row>
@@ -346,7 +346,7 @@ export default function MemberDashboard() {
                     RIWAYAT BELANJA ({transactions.length})
                   </button>
                   <button
-                    onClick={() => setMemberTab('titipan')}
+                    onClick={() => setMemberTab('titip')}
                     style={{
                       padding: '6px 20px',
                       fontWeight: 800,
@@ -355,16 +355,16 @@ export default function MemberDashboard() {
                       border: 'none',
                       borderRadius: '25px',
                       transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
-                      background: memberTab === 'titipan' ? '#16a34a' : 'transparent',
-                      color: memberTab === 'titipan' ? '#fff' : '#64748b',
-                      boxShadow: memberTab === 'titipan' ? '0 4px 10px rgba(22, 163, 74, 0.25)' : 'none',
+                      background: memberTab === 'titip' ? '#16a34a' : 'transparent',
+                      color: memberTab === 'titip' ? '#fff' : '#64748b',
+                      boxShadow: memberTab === 'titip' ? '0 4px 10px rgba(22, 163, 74, 0.25)' : 'none',
                       display: 'flex',
                       alignItems: 'center',
                       gap: '6px',
                       letterSpacing: '0.5px'
                     }}
                   >
-                    TITIPAN SAYA ({titipanList.length})
+                    TITIP SAYA ({titipanList.length})
                   </button>
                 </div>
 
@@ -388,6 +388,7 @@ export default function MemberDashboard() {
                         {
                           title: 'Gerai',
                           dataIndex: 'gerai_nama',
+                          render: (v) => <span style={{ fontWeight: 600 }}>{v}</span>
                         },
                         {
                           title: 'Jumlah Item',
@@ -415,7 +416,7 @@ export default function MemberDashboard() {
                   </Card>
                 )}
 
-                {memberTab === 'titipan' && (
+                {memberTab === 'titip' && (
                   <Card bordered={false} style={{ borderRadius: 12, boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)', height: '100%', borderTop: '3px solid #15803d' }} title={<span style={{ fontWeight: 800, color: '#15803d' }}>BARANG TITIPAN SAYA</span>}>
                     {loadingTitipan ? (
                       <div style={{ textAlign: 'center', padding: '40px 0' }}><Spin tip="Memuat data titipan..." /></div>
@@ -429,26 +430,26 @@ export default function MemberDashboard() {
                           const status = barang.status_terakhir || 'MASUK';
                           return (
                             <div key={barang.id} onClick={() => handleShowTitipanRiwayat(barang)}
-                              style={{ border: '1px solid #e2e8f0', borderLeft: `4px solid ${statusColors[status] || '#64748b'}`, borderRadius: 8, padding: 14, marginBottom: 12, cursor: 'pointer', transition: 'all 0.2s', background: '#fafafa' }}
+                              style={{ border: '1px solid #e2e8f0', borderLeft: `4px solid ${statusColors[status] || '#64748b'}`, borderRadius: 10, padding: 14, marginBottom: 12, cursor: 'pointer', transition: 'all 0.2s', background: '#fafafa' }}
                               onMouseEnter={e => e.currentTarget.style.background = '#f0fdf4'}
                               onMouseLeave={e => e.currentTarget.style.background = '#fafafa'}
                             >
                               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                                 <div>
-                                  <div style={{ fontWeight: 700, fontSize: 14 }}>{barang.nama_barang}</div>
-                                  <div style={{ fontSize: 11, color: '#64748b', marginTop: 2 }}>{barang.kategori} · {barang.satuan === 'kg' ? `${parseFloat(barang.berat_kg || 0).toFixed(3)} kg` : `${barang.jumlah_pcs} pcs`}</div>
-                                  <div style={{ fontSize: 11, color: '#64748b' }}>{formatRupiah(barang.harga_satuan)} / {barang.satuan}</div>
+                                  <div style={{ fontWeight: 800, fontSize: 14, color: '#1e293b' }}>{barang.nama_barang}</div>
+                                  <div style={{ fontSize: 11, color: '#64748b', marginTop: 3 }}>{barang.kategori} · {barang.satuan === 'kg' ? `${parseFloat(barang.berat_kg || 0).toFixed(3)} kg` : `${barang.jumlah_pcs} pcs`}</div>
+                                  <div style={{ fontSize: 11, color: '#64748b', marginTop: 1 }}>{formatRupiah(barang.harga_satuan)} / {barang.satuan}</div>
                                 </div>
                                 <div style={{ textAlign: 'right' }}>
-                                  <div style={{ background: statusColors[status] + '22', color: statusColors[status], fontWeight: 700, fontSize: 11, padding: '3px 10px', borderRadius: 20, border: `1px solid ${statusColors[status]}55`, marginBottom: 4 }}>
+                                  <div style={{ background: statusColors[status] + '12', color: statusColors[status], fontWeight: 800, fontSize: 10, padding: '3px 10px', borderRadius: 20, border: `1px solid ${statusColors[status]}33`, marginBottom: 4 }}>
                                     {statusLabel[status] || status}
                                   </div>
                                   <div style={{ fontSize: 11, color: '#94a3b8' }}>{new Date(barang.created_at).toLocaleDateString('id-ID')}</div>
                                 </div>
                               </div>
                               <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 10, paddingTop: 8, borderTop: '1px dashed #e2e8f0', fontSize: 11 }}>
-                                <span style={{ color: '#64748b' }}>Nilai Titip: <strong>{formatRupiah((barang.satuan === 'kg' ? (parseFloat(barang.berat_kg || 0)) : (barang.jumlah_pcs || 0)) * barang.harga_satuan)}</strong></span>
-                                <span style={{ color: '#15803d', fontWeight: 600 }}>Klik untuk riwayat hash ›</span>
+                                <span style={{ color: '#475569' }}>Nilai Titip: <strong>{formatRupiah((barang.satuan === 'kg' ? (parseFloat(barang.berat_kg || 0)) : (barang.jumlah_pcs || 0)) * barang.harga_satuan)}</strong></span>
+                                <span style={{ color: '#15803d', fontWeight: 700 }}>Klik untuk riwayat hash ›</span>
                               </div>
                             </div>
                           );
@@ -463,9 +464,9 @@ export default function MemberDashboard() {
 
           {/* === EVENT CHAIN RIWAYAT MODAL === */}
           <Modal
-            open={showTitipanModal}
+            open={showTitipModal}
             onCancel={() => { setShowTitipanModal(false); setTitipanRiwayat([]); setSelectedTitipan(null); }}
-            footer={<Button onClick={() => setShowTitipanModal(false)}>Tutup</Button>}
+            footer={<Button onClick={() => setShowTitipanModal(false)} style={{ fontWeight: 700 }}>Tutup</Button>}
             centered
             width={580}
             title={<span style={{ fontWeight: 800, color: '#15803d' }}>Riwayat Event Chain: {selectedTitipan?.nama_barang}</span>}
@@ -475,7 +476,7 @@ export default function MemberDashboard() {
             ) : (
               <div>
                 <div style={{ marginBottom: 16, background: '#f0fdf4', border: '1px solid #bbf7d0', borderRadius: 8, padding: 12, display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <span style={{ fontSize: 16 }}>✓</span>
+                  <span style={{ fontSize: 16, color: '#15803d', fontWeight: 'bold' }}>✓</span>
                   <span style={{ fontWeight: 700, color: '#15803d', fontSize: 12 }}>Rantai Hash Terverifikasi — Riwayat Otentik Tidak Dapat Dimanipulasi</span>
                 </div>
 
@@ -580,7 +581,7 @@ export default function MemberDashboard() {
                           )}
                           <div style={{ flex: 1, background: '#f8fafc', borderRadius: 8, padding: 12, border: `1px solid ${color}33` }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6 }}>
-                              <span style={{ fontWeight: 700, color, fontSize: 12 }}>{evLabel[ev.event_type] || ev.event_type}</span>
+                              <span style={{ fontWeight: 800, color, fontSize: 12 }}>{evLabel[ev.event_type] || ev.event_type}</span>
                               <span style={{ fontSize: 11, color: '#94a3b8' }}>{new Date(ev.timestamp).toLocaleString('id-ID')}</span>
                             </div>
                             <div style={{ fontFamily: 'monospace', fontSize: 10, color: '#475569', marginBottom: 4 }}>
@@ -614,9 +615,9 @@ export default function MemberDashboard() {
               onChange={(e) => setSearchQuery(e.target.value)}
               onPressEnter={handleSearch}
               size="large"
-              style={{ borderRadius: 6 }}
+              style={{ borderRadius: 8 }}
             />
-            <Button type="primary" onClick={handleSearch} size="large" style={{ borderRadius: 6, fontWeight: 600 }}>
+            <Button type="primary" onClick={handleSearch} size="large" style={{ borderRadius: 8, fontWeight: 700, paddingLeft: 24, paddingRight: 24 }}>
               CARI
             </Button>
           </div>
@@ -628,20 +629,21 @@ export default function MemberDashboard() {
           ) : members.length === 0 ? (
             <Empty description="Anggota tidak ditemukan." />
           ) : (
-            <Row gutter={[24, 24]}>
+            <Row gutter={[16, 16]}>
               {members.map((m) => (
                 <Col xs={24} sm={12} md={8} key={m.id}>
                   <Card
                     hoverable
                     bordered
                     onClick={() => handleSelectMember(m.id)}
-                    style={{ borderRadius: 10, transition: 'all 0.2s', border: '1px solid #f1f5f9' }}
+                    style={{ borderRadius: 12, transition: 'all 0.2s', border: '1px solid #e2e8f0' }}
+                    className="hover-lift-card"
                   >
                     <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
                       <div
                         style={{
-                          width: 40,
-                          height: 40,
+                          width: 44,
+                          height: 44,
                           borderRadius: '50%',
                           backgroundColor: '#059669',
                           color: '#fff',
@@ -650,12 +652,14 @@ export default function MemberDashboard() {
                           justifyContent: 'center',
                           fontWeight: 'bold',
                           flexShrink: 0,
+                          fontSize: 16,
+                          boxShadow: '0 2px 8px rgba(5,150,105,0.2)'
                         }}
                       >
                         {m.nama.charAt(0).toUpperCase()}
                       </div>
                       <div style={{ overflow: 'hidden', flex: 1 }}>
-                        <div style={{ fontWeight: 700, fontSize: 14, color: '#1e293b', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                        <div style={{ fontWeight: 800, fontSize: 14, color: '#0f172a', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
                           {m.nama}
                         </div>
                         <Text type="secondary" style={{ fontSize: 11 }}>
@@ -663,7 +667,7 @@ export default function MemberDashboard() {
                         </Text>
                         <div style={{ marginTop: 8, display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
                           <Text style={{ fontSize: 11, color: '#64748b' }}>Saldo:</Text>
-                          <Text strong style={{ color: '#16a34a', fontSize: 14 }}>
+                          <Text strong style={{ color: '#059669', fontSize: 15, fontWeight: 800 }}>
                             {formatRupiah(m.saldo_simpanan)}
                           </Text>
                         </div>
@@ -682,7 +686,7 @@ export default function MemberDashboard() {
         open={showReceipt}
         onCancel={() => setShowReceipt(false)}
         footer={[
-          <Button key="close" type="primary" onClick={() => setShowReceipt(false)} style={{ fontWeight: 600 }}>
+          <Button key="close" type="primary" onClick={() => setShowReceipt(false)} style={{ fontWeight: 700 }}>
             TUTUP STRUK
           </Button>,
         ]}
@@ -781,7 +785,7 @@ export default function MemberDashboard() {
                     fontFamily: 'monospace',
                   }}
                 >
-                  {activeTx.hash.substring(0, 8)}...xxxxxxxx
+                  {activeTx.hash ? activeTx.hash.substring(0, 8) : '-'}...xxxxxxxx
                 </div>
                 <div style={{ margin: '6px 0 4px 0' }}>
                   <strong>Prev Block Hash:</strong>
@@ -796,7 +800,7 @@ export default function MemberDashboard() {
                     fontFamily: 'monospace',
                   }}
                 >
-                  {activeTx.prev_hash.substring(0, 8)}...xxxxxxxx
+                  {activeTx.prev_hash ? activeTx.prev_hash.substring(0, 8) : '-'}...xxxxxxxx
                 </div>
               </div>
 

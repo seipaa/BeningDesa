@@ -374,10 +374,10 @@ export default function EdgeDashboard({ isOffline, systemState, onToggleMode, on
             >
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
                 <div>
-                  <Text strong style={{ fontSize: 15 }}>
+                  <Text strong style={{ fontSize: 14 }}>
                     {isOffline ? 'MODE OFFLINE AKTIF' : 'MODE ONLINE AKTIF'}
                   </Text>
-                  <div style={{ fontSize: 12, color: '#64748b' }}>
+                  <div style={{ fontSize: 12, color: '#64748b', marginTop: 2 }}>
                     {isOffline ? 'Transaksi disimpan di database lokal.' : 'Transaksi otomatis disinkronkan ke Cloud.'}
                   </div>
                 </div>
@@ -394,8 +394,8 @@ export default function EdgeDashboard({ isOffline, systemState, onToggleMode, on
 
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
-                  <Text strong>Antrean Sinkronisasi (Queue):</Text>
-                  <div style={{ fontSize: 12, color: '#64748b' }}>
+                  <Text strong>Antrean Sinkronisasi:</Text>
+                  <div style={{ fontSize: 12, color: '#64748b', marginTop: 2 }}>
                     {pendingCount > 0 ? `${pendingCount} transaksi tertunda.` : 'Semua data tersinkron.'}
                   </div>
                 </div>
@@ -405,14 +405,14 @@ export default function EdgeDashboard({ isOffline, systemState, onToggleMode, on
                     size="small"
                     onClick={handleManualSync}
                     disabled={isOffline || pendingCount === 0}
-                    style={{ borderRadius: 4, backgroundColor: isOffline ? '#94a3b8' : '#059669', fontWeight: 600 }}
+                    style={{ borderRadius: 6, backgroundColor: isOffline ? '#cbd5e1' : '#059669', borderColor: isOffline ? '#cbd5e1' : '#059669', fontWeight: 700 }}
                   >
                     SYNC NOW
                   </Button>
                 </Badge>
               </div>
 
-              <div style={{ fontSize: 11, color: '#94a3b8', marginTop: 16 }}>
+              <div style={{ fontSize: 10, color: '#94a3b8', marginTop: 16 }}>
                 <code>// SIMULASI: Gateway sinkronisasi Edge Server (Offline-First)</code>
               </div>
             </Card>
@@ -432,7 +432,7 @@ export default function EdgeDashboard({ isOffline, systemState, onToggleMode, on
                     title="Volume Keuangan"
                     value={totalVolume}
                     formatter={formatRupiah}
-                    valueStyle={{ fontWeight: 800, fontSize: 16, color: '#059669' }}
+                    valueStyle={{ fontWeight: 800, fontSize: 15, color: '#059669' }}
                   />
                 </Col>
                 <Col span={12}>
@@ -444,7 +444,7 @@ export default function EdgeDashboard({ isOffline, systemState, onToggleMode, on
                 </Col>
                 <Col span={12}>
                   <Statistic
-                    title="Tertunda (Queue)"
+                    title="Tertunda"
                     value={pendingCount}
                     valueStyle={{ color: '#f59e0b', fontWeight: 800 }}
                   />
@@ -456,9 +456,9 @@ export default function EdgeDashboard({ isOffline, systemState, onToggleMode, on
             <Card
               bordered={false}
               style={{ borderRadius: 12, boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)', backgroundColor: '#fff8f8', border: '1px solid #fee2e2' }}
-              title={<span style={{ fontWeight: 800, color: '#991b1b' }}>SIMULASI MANIPULASI DATA (AUDIT)</span>}
+              title={<span style={{ fontWeight: 800, color: '#991b1b' }}>MANIPULASI DATA (AUDIT)</span>}
             >
-              <Paragraph style={{ fontSize: 12, color: '#7f1d1d' }}>
+              <Paragraph style={{ fontSize: 12, color: '#7f1d1d', lineHeight: '1.6' }}>
                 Untuk menguji verifikasi <strong>hash-chain</strong>, Anda dapat merusak rantai ledger secara sengaja dengan mengubah data transaksi di database Supabase (SQL Editor):
               </Paragraph>
               <pre
@@ -468,7 +468,7 @@ export default function EdgeDashboard({ isOffline, systemState, onToggleMode, on
                   padding: 8,
                   fontSize: 10,
                   overflowX: 'auto',
-                  borderRadius: 4,
+                  borderRadius: 6,
                   color: '#991b1b',
                   fontFamily: 'monospace',
                 }}
@@ -477,7 +477,7 @@ export default function EdgeDashboard({ isOffline, systemState, onToggleMode, on
 SET total = 999999 
 WHERE id = '${transactions[0]?.id || 'ID_TRANSAKSI'}';`}
               </pre>
-              <Paragraph style={{ fontSize: 11, color: '#7f1d1d', margin: '8px 0 0 0' }}>
+              <Paragraph style={{ fontSize: 11, color: '#7f1d1d', margin: '8px 0 0 0', lineHeight: '1.5' }}>
                 Setelah data diubah, klik tombol <strong>"VERIFIKASI LEDGER"</strong> di kanan untuk melihat rantai terputus (merah).
               </Paragraph>
             </Card>
@@ -546,11 +546,11 @@ WHERE id = '${transactions[0]?.id || 'ID_TRANSAKSI'}';`}
               style={{ borderRadius: 12, boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)' }}
               title={
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: 12 }}>
-                  <span style={{ fontWeight: 800, fontSize: 16 }}>LEDGER RANTAI TRANSAKSI</span>
+                  <span style={{ fontWeight: 800, fontSize: 16 }}>LEDGER TRANSAKSI KASIR</span>
                   <Button
                     type="primary"
                     onClick={handleVerifyLedger}
-                    style={{ borderRadius: 6, backgroundColor: '#8b5cf6', borderColor: '#8b5cf6', fontWeight: 600 }}
+                    style={{ borderRadius: 6, backgroundColor: '#8b5cf6', borderColor: '#8b5cf6', fontWeight: 700 }}
                   >
                     VERIFIKASI LEDGER
                   </Button>
@@ -559,7 +559,7 @@ WHERE id = '${transactions[0]?.id || 'ID_TRANSAKSI'}';`}
             >
               {/* Hash-Chain Visual Timeline */}
               <div style={{ marginBottom: 24 }}>
-                <Text strong style={{ fontSize: 14, color: '#334155', display: 'block', marginBottom: 12 }}>
+                <Text strong style={{ fontSize: 13, color: '#334155', display: 'block', marginBottom: 12 }}>
                   Visualisasi Rantai Hash (10 Transaksi Terakhir)
                 </Text>
                 {transactions.length === 0 ? (
@@ -571,10 +571,10 @@ WHERE id = '${transactions[0]?.id || 'ID_TRANSAKSI'}';`}
                       alignItems: 'center',
                       gap: 8,
                       overflowX: 'auto',
-                      padding: '12px 4px 20px',
+                      padding: '12px 6px 20px',
                       border: '1px solid #e2e8f0',
-                      borderRadius: 8,
-                      backgroundColor: '#faf5ff',
+                      borderRadius: 12,
+                      backgroundColor: '#f8fafc',
                     }}
                   >
                     {[...transactions].reverse().slice(0, 10).map((tx, idx, arr) => {
@@ -585,20 +585,20 @@ WHERE id = '${transactions[0]?.id || 'ID_TRANSAKSI'}';`}
                           <div
                             onClick={() => handleShowDetail(tx.id)}
                             style={{
-                              minWidth: 160,
-                              maxWidth: 160,
+                              minWidth: 155,
+                              maxWidth: 155,
                               backgroundColor: isBrokenNode ? '#fee2e2' : '#fff',
                               border: isBrokenNode ? '2px solid #ef4444' : '1px solid #e2e8f0',
-                              borderRadius: 8,
-                              padding: 10,
+                              borderRadius: 10,
+                              padding: 12,
                               boxShadow: '0 2px 4px rgba(0,0,0,0.02)',
                               cursor: 'pointer',
                               transition: 'all 0.2s',
                             }}
-                            className="chain-node-card"
+                            className="hover-lift-card"
                           >
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 6 }}>
-                              <Tag color={isBrokenNode ? 'red' : 'purple'} style={{ fontSize: 9, margin: 0 }}>
+                              <Tag color={isBrokenNode ? 'red' : 'purple'} style={{ fontSize: 9, margin: 0, fontWeight: 700 }}>
                                 BLOCK #{arr.length - idx}
                               </Tag>
                               {tx.synced ? (
@@ -607,14 +607,14 @@ WHERE id = '${transactions[0]?.id || 'ID_TRANSAKSI'}';`}
                                 <Badge status="warning" title="Pending Sync" />
                               )}
                             </div>
-                            <div style={{ fontSize: 13, fontWeight: 700, color: isBrokenNode ? '#b91c1c' : '#1e293b' }}>
+                            <div style={{ fontSize: 13, fontWeight: 800, color: isBrokenNode ? '#b91c1c' : '#0f172a' }}>
                               {formatRupiah(tx.total)}
                             </div>
-                            <div style={{ fontSize: 10, color: '#64748b', margin: '4px 0' }}>
-                              {tx.anggota_nama || 'Tamu'}
+                            <div style={{ fontSize: 10, color: '#64748b', margin: '4px 0', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                              {tx.anggota_nama || 'Tamu (Guest)'}
                             </div>
                             <Divider style={{ margin: '6px 0' }} />
-                            <div style={{ fontSize: 8, fontFamily: 'monospace', wordBreak: 'break-all', color: '#8b5cf6' }}>
+                            <div style={{ fontSize: 8, fontFamily: 'monospace', wordBreak: 'break-all', color: '#6366f1', fontWeight: 600 }}>
                               Hash: {tx.hash.substring(0, 8)}...
                             </div>
                           </div>
@@ -624,12 +624,13 @@ WHERE id = '${transactions[0]?.id || 'ID_TRANSAKSI'}';`}
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                minWidth: 20,
-                                fontWeight: 800,
-                                color: isBrokenNode ? '#ef4444' : '#8b5cf6',
+                                minWidth: 16,
+                                fontWeight: 900,
+                                color: isBrokenNode ? '#ef4444' : '#a7f3d0',
+                                fontSize: 16
                               }}
                             >
-                              ==&gt;
+                              →
                             </div>
                           )}
                         </React.Fragment>
@@ -654,7 +655,7 @@ WHERE id = '${transactions[0]?.id || 'ID_TRANSAKSI'}';`}
                   {
                     title: 'Block ID',
                     dataIndex: 'hash',
-                    render: (hash) => <span style={{ fontFamily: 'monospace', fontSize: 11 }}>#{hash.substring(0, 8)}</span>,
+                    render: (hash) => <span style={{ fontFamily: 'monospace', fontSize: 11, fontWeight: 600 }}>#{hash.substring(0, 8)}</span>,
                   },
                   {
                     title: 'Waktu',
@@ -664,29 +665,29 @@ WHERE id = '${transactions[0]?.id || 'ID_TRANSAKSI'}';`}
                   {
                     title: 'Anggota',
                     dataIndex: 'anggota_nama',
-                    render: (name) => name || <Text type="secondary">Tamu</Text>,
+                    render: (name) => name || <Text type="secondary">Tamu (Guest)</Text>,
                   },
                   {
                     title: 'Total Belanja',
                     dataIndex: 'total',
-                    render: (total) => <span style={{ color: '#dc2626', fontWeight: 600 }}>{formatRupiah(total)}</span>,
+                    render: (total) => <span style={{ color: '#dc2626', fontWeight: 700 }}>{formatRupiah(total)}</span>,
                   },
                   {
                     title: 'Status Sync',
                     dataIndex: 'synced',
                     render: (synced) =>
                       synced ? (
-                        <Tag color="success">Synced</Tag>
+                        <Tag color="success" style={{ fontWeight: 700 }}>Synced</Tag>
                       ) : (
-                        <Tag color="warning">Pending</Tag>
+                        <Tag color="warning" style={{ fontWeight: 700 }}>Pending</Tag>
                       ),
                   },
                   {
                     title: 'Block Hash',
                     dataIndex: 'hash',
                     render: (hash) => (
-                      <span style={{ fontFamily: 'monospace', fontSize: 10, color: '#64748b' }}>
-                        {hash.substring(0, 8)}...
+                      <span style={{ fontFamily: 'monospace', fontSize: 10, color: '#94a3b8' }}>
+                        {hash.substring(0, 16)}...
                       </span>
                     ),
                   },
@@ -749,7 +750,7 @@ WHERE id = '${transactions[0]?.id || 'ID_TRANSAKSI'}';`}
                     key: 'barang',
                     render: (_, record) => (
                       <div>
-                        <div style={{ fontWeight: 700 }}>{record.nama_barang}</div>
+                        <div style={{ fontWeight: 700, color: '#1e293b' }}>{record.nama_barang}</div>
                         <div style={{ fontSize: 11, color: '#64748b' }}>Kategori: {record.kategori}</div>
                       </div>
                     )
@@ -757,7 +758,7 @@ WHERE id = '${transactions[0]?.id || 'ID_TRANSAKSI'}';`}
                   {
                     title: 'Penitip (Anggota)',
                     dataIndex: 'anggota',
-                    render: (a) => a ? <span style={{ fontWeight: 600 }}>{a.nama}</span> : <Text type="secondary">Tamu / Guest</Text>
+                    render: (a) => a ? <span style={{ fontWeight: 600, color: '#475569' }}>{a.nama}</span> : <Text type="secondary">Tamu / Guest</Text>
                   },
                   {
                     title: 'Ukuran',
@@ -769,7 +770,7 @@ WHERE id = '${transactions[0]?.id || 'ID_TRANSAKSI'}';`}
                   {
                     title: 'Harga Satuan',
                     dataIndex: 'harga_satuan',
-                    render: (h) => formatRupiah(h)
+                    render: (h) => <span style={{ fontWeight: 600 }}>{formatRupiah(h)}</span>
                   },
                   {
                     title: 'Status Terakhir',
@@ -844,14 +845,14 @@ WHERE id = '${transactions[0]?.id || 'ID_TRANSAKSI'}';`}
           isVerifying
             ? null
             : [
-                <Button key="close" type="primary" onClick={() => setShowVerifyModal(false)} style={{ fontWeight: 600 }}>
+                <Button key="close" type="primary" onClick={() => setShowVerifyModal(false)} style={{ fontWeight: 700 }}>
                   TUTUP AUDIT
                 </Button>,
               ]
         }
         centered
         width={450}
-        title={<span style={{ fontWeight: 800 }}>AUDIT RANTAI LEDGER TAMPER-EVIDENT</span>}
+        title={<span style={{ fontWeight: 800, color: '#1e293b' }}>AUDIT RANTAI LEDGER TAMPER-EVIDENT</span>}
       >
         <div style={{ padding: '8px 0' }}>
           <Timeline
@@ -903,11 +904,12 @@ WHERE id = '${transactions[0]?.id || 'ID_TRANSAKSI'}';`}
                     </div>
                   }
                   description={
-                    <Paragraph style={{ margin: 0, fontSize: 12 }}>
+                    <Paragraph style={{ margin: 0, fontSize: 12, lineHeight: '1.5' }}>
                       Semua {verifyResult.checked} transaksi terverifikasi dengan benar. Tidak ada manipulasi data terdeteksi pada database lokal.
                     </Paragraph>
                   }
                   type="success"
+                  showIcon
                 />
               ) : (
                 <Alert
@@ -918,14 +920,15 @@ WHERE id = '${transactions[0]?.id || 'ID_TRANSAKSI'}';`}
                   }
                   description={
                     <div>
-                      <Paragraph style={{ margin: '0 0 8px 0', fontSize: 12 }}>
+                      <Paragraph style={{ margin: '0 0 8px 0', fontSize: 12, lineHeight: '1.5' }}>
                         {verifyResult.error || `Kerusakan rantai terdeteksi pada transaksi ke-${verifyResult.broken_at + 1}.`}
                       </Paragraph>
-                      <Tag color="red">Broken Block: #{verifyResult.broken_at + 1}</Tag>
-                      <Tag color="red">Total checked: {verifyResult.checked}</Tag>
+                      <Tag color="red" style={{ fontWeight: 700 }}>Broken Block: #{verifyResult.broken_at + 1}</Tag>
+                      <Tag color="red" style={{ fontWeight: 700 }}>Total checked: {verifyResult.checked}</Tag>
                     </div>
                   }
                   type="error"
+                  showIcon
                 />
               )}
             </div>
@@ -938,7 +941,7 @@ WHERE id = '${transactions[0]?.id || 'ID_TRANSAKSI'}';`}
         open={showDetailModal}
         onCancel={() => setShowDetailModal(false)}
         footer={[
-          <Button key="close" onClick={() => setShowDetailModal(false)} style={{ fontWeight: 600 }}>
+          <Button key="close" onClick={() => setShowDetailModal(false)} style={{ fontWeight: 700 }}>
             TUTUP
           </Button>,
         ]}
@@ -961,11 +964,11 @@ WHERE id = '${transactions[0]?.id || 'ID_TRANSAKSI'}';`}
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
               <Text type="secondary">Metode Input:</Text>
-              <Text strong>{detailTx.metode_input}</Text>
+              <Text strong style={{ textTransform: 'uppercase' }}>{detailTx.metode_input}</Text>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
               <Text type="secondary">Sinkronisasi:</Text>
-              <Tag color={detailTx.synced ? 'green' : 'warning'}>{detailTx.synced ? 'Synced' : 'Pending'}</Tag>
+              <Tag color={detailTx.synced ? 'green' : 'warning'} style={{ fontWeight: 700 }}>{detailTx.synced ? 'Synced' : 'Pending'}</Tag>
             </div>
 
             <Divider style={{ margin: '12px 0' }} />
@@ -973,20 +976,20 @@ WHERE id = '${transactions[0]?.id || 'ID_TRANSAKSI'}';`}
             <Text strong style={{ display: 'block', marginBottom: 8 }}>
               Barang Belanja:
             </Text>
-            <div style={{ maxHeight: 120, overflowY: 'auto', background: '#f8fafc', padding: 8, borderRadius: 6, border: '1px solid #e2e8f0', marginBottom: 16 }}>
+            <div style={{ maxHeight: 120, overflowY: 'auto', background: '#f8fafc', padding: 10, borderRadius: 8, border: '1px solid #e2e8f0', marginBottom: 16 }}>
               {(typeof detailTx.items === 'string' ? JSON.parse(detailTx.items) : detailTx.items).map((item, i) => (
-                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, marginBottom: 4 }}>
+                <div key={i} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, marginBottom: 6 }}>
                   <span>
                     {item.nama} ({item.jumlah} pcs)
                   </span>
-                  <span style={{ fontWeight: 600 }}>{formatRupiah(item.harga_satuan * item.jumlah)}</span>
+                  <span style={{ fontWeight: 700 }}>{formatRupiah(item.harga_satuan * item.jumlah)}</span>
                 </div>
               ))}
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 16 }}>
               <Text strong>Total Belanja:</Text>
-              <Text style={{ color: '#dc2626', fontSize: 18, fontWeight: 800 }}>{formatRupiah(detailTx.total)}</Text>
+              <Text style={{ color: '#dc2626', fontSize: 18, fontWeight: 900 }}>{formatRupiah(detailTx.total)}</Text>
             </div>
 
             <Divider style={{ margin: '12px 0' }} />
@@ -999,12 +1002,14 @@ WHERE id = '${transactions[0]?.id || 'ID_TRANSAKSI'}';`}
                 style={{
                   background: '#f1f5f9',
                   padding: 8,
-                  borderRadius: 4,
+                  borderRadius: 6,
                   fontFamily: 'monospace',
                   marginBottom: 10,
+                  fontWeight: 600,
+                  color: '#475569'
                 }}
               >
-                {detailTx.hash.substring(0, 8)}...xxxxxxxx
+                {detailTx.hash}
               </div>
               <div style={{ marginBottom: 4 }}>
                 <strong>Previous Block Hash:</strong>
@@ -1013,11 +1018,13 @@ WHERE id = '${transactions[0]?.id || 'ID_TRANSAKSI'}';`}
                 style={{
                   background: '#f1f5f9',
                   padding: 8,
-                  borderRadius: 4,
+                  borderRadius: 6,
                   fontFamily: 'monospace',
+                  fontWeight: 600,
+                  color: '#475569'
                 }}
               >
-                {detailTx.prev_hash.substring(0, 8)}...xxxxxxxx
+                {detailTx.prev_hash}
               </div>
             </div>
           </div>
@@ -1054,7 +1061,9 @@ WHERE id = '${transactions[0]?.id || 'ID_TRANSAKSI'}';`}
                 <Select value={addTitipKategori} onChange={setAddTitipKategori} style={{ width: '100%' }}>
                   <Option value="Hasil Tani">Hasil Tani</Option>
                   <Option value="Kerajinan">Kerajinan</Option>
-                  <Option value="Makanan">Makanan</Option>
+                  <Option value="Makanan & Minuman">Makanan & Minuman</Option>
+                  <Option value="Sayur & Buah">Sayur & Buah</Option>
+                  <Option value="Ternak">Ternak</Option>
                   <Option value="Umum">Umum</Option>
                 </Select>
               </Form.Item>

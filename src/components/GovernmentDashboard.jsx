@@ -142,7 +142,7 @@ export default function GovernmentDashboard() {
       {/* Overview stats row */}
       <Row gutter={[24, 24]} style={{ marginBottom: 24 }}>
         <Col xs={12} sm={12} md={6}>
-          <Card bordered={false} style={{ borderRadius: 12, boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)', borderTop: '3px solid #64748b' }}>
+          <Card bordered={false} style={{ borderRadius: 14, boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)', borderTop: '3px solid #64748b' }}>
             <Statistic
               title="KOPERASI DESA"
               value={global.total_konsultasi}
@@ -151,7 +151,7 @@ export default function GovernmentDashboard() {
           </Card>
         </Col>
         <Col xs={12} sm={12} md={6}>
-          <Card bordered={false} style={{ borderRadius: 12, boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)', borderTop: '3px solid #3b82f6' }}>
+          <Card bordered={false} style={{ borderRadius: 14, boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)', borderTop: '3px solid #3b82f6' }}>
             <Statistic
               title="ANGGOTA NASIONAL"
               value={global.total_anggota}
@@ -160,7 +160,7 @@ export default function GovernmentDashboard() {
           </Card>
         </Col>
         <Col xs={12} sm={12} md={6}>
-          <Card bordered={false} style={{ borderRadius: 12, boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)', borderTop: '3px solid #8b5cf6' }}>
+          <Card bordered={false} style={{ borderRadius: 14, boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)', borderTop: '3px solid #8b5cf6' }}>
             <Statistic
               title="TRANSAKSI TERCATAT"
               value={global.total_transaksi}
@@ -169,7 +169,7 @@ export default function GovernmentDashboard() {
           </Card>
         </Col>
         <Col xs={12} sm={12} md={6}>
-          <Card bordered={false} style={{ borderRadius: 12, boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)', borderTop: '3px solid #059669' }}>
+          <Card bordered={false} style={{ borderRadius: 14, boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)', borderTop: '3px solid #059669' }}>
             <Statistic
               title="VOLUME AGREGAT"
               value={global.total_volume}
@@ -266,7 +266,7 @@ export default function GovernmentDashboard() {
                 <div
                   style={{
                     backgroundColor: '#f8fafc',
-                    borderRadius: 8,
+                    borderRadius: 12,
                     border: '1px solid #e2e8f0',
                     height: 250,
                     display: 'flex',
@@ -328,6 +328,7 @@ export default function GovernmentDashboard() {
                             alignItems: 'center',
                             justifyContent: 'center',
                             cursor: 'pointer',
+                            animation: 'breathe 3s infinite',
                           }}
                           onClick={() => handleVerifyCooperative(c.id, c.nama)}
                         >
@@ -337,12 +338,13 @@ export default function GovernmentDashboard() {
                           style={{
                             background: '#fff',
                             border: '1px solid #cbd5e1',
-                            padding: '2px 6px',
-                            borderRadius: 4,
+                            padding: '4px 8px',
+                            borderRadius: 6,
                             fontSize: 9,
-                            fontWeight: 700,
-                            marginTop: 4,
+                            fontWeight: 800,
+                            marginTop: 6,
                             boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+                            color: '#1e293b'
                           }}
                         >
                           {c.nama.replace('Koperasi Desa ', '')}
@@ -354,18 +356,18 @@ export default function GovernmentDashboard() {
               </Col>
               <Col xs={24} md={8}>
                 <div style={{ padding: '8px 0' }}>
-                  <Title level={5}>Informasi Status Jaringan Koperasi</Title>
-                  <Paragraph style={{ fontSize: 12, color: '#64748b' }}>
+                  <Title level={5} style={{ fontWeight: 800, color: '#0f172a' }}>Status Jaringan Koperasi</Title>
+                  <Paragraph style={{ fontSize: 12, color: '#64748b', lineHeight: '1.6' }}>
                     Setiap pin pada peta mewakili stasiun koperasi desa regional. Anda dapat mengecek status enkripsi ledger secara langsung dengan mengklik pin atau tombol verifikasi pada tabel di bawah.
                   </Paragraph>
-                  <Space direction="vertical" style={{ width: '100%' }}>
+                  <Space direction="vertical" style={{ width: '100%', marginTop: 8 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                       <span style={{ color: '#059669', fontWeight: 'bold' }}>[OK]</span>
-                      <Text style={{ fontSize: 12 }}>Pin Hijau: Rantai hash aman dan terverifikasi utuh.</Text>
+                      <Text style={{ fontSize: 12, color: '#475569' }}>Pin Hijau: Rantai hash aman dan terverifikasi utuh.</Text>
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                       <span style={{ color: '#dc2626', fontWeight: 'bold' }}>[WARN]</span>
-                      <Text style={{ fontSize: 12 }}>Pin Merah: Rantai hash terputus! (Indikasi data termanipulasi).</Text>
+                      <Text style={{ fontSize: 12, color: '#475569' }}>Pin Merah: Rantai hash terputus! (Indikasi manipulasi).</Text>
                     </div>
                   </Space>
                 </div>
@@ -391,8 +393,8 @@ export default function GovernmentDashboard() {
               key: 'nama',
               render: (_, record) => (
                 <div>
-                  <Text strong>{record.nama}</Text>
-                  <div style={{ fontSize: 11, color: '#64748b' }}>
+                  <Text strong style={{ color: '#1e293b' }}>{record.nama}</Text>
+                  <div style={{ fontSize: 11, color: '#64748b', marginTop: 2 }}>
                     {record.desa}, {record.kecamatan}
                   </div>
                 </div>
@@ -402,21 +404,24 @@ export default function GovernmentDashboard() {
               title: 'Gerai',
               dataIndex: 'jumlah_gerai',
               align: 'center',
+              render: (v) => <span style={{ fontWeight: 700 }}>{v}</span>
             },
             {
               title: 'Anggota',
               dataIndex: 'jumlah_anggota',
               align: 'center',
+              render: (v) => <span style={{ fontWeight: 700 }}>{v}</span>
             },
             {
               title: 'Total Volume',
               dataIndex: 'total_volume',
-              render: (vol) => <span style={{ fontWeight: 600 }}>{formatRupiah(vol)}</span>,
+              render: (vol) => <span style={{ fontWeight: 700, color: '#059669' }}>{formatRupiah(vol)}</span>,
             },
             {
               title: 'Transaksi',
               dataIndex: 'total_transaksi',
               align: 'center',
+              render: (v) => <span style={{ fontWeight: 700 }}>{v}</span>
             },
             {
               title: 'Sinkronisasi Cloud',
@@ -442,12 +447,12 @@ export default function GovernmentDashboard() {
               render: (_, record) => {
                 const audit = auditStatuses[record.id];
                 if (!audit) {
-                  return <Tag color="default">BELUM AUDIT</Tag>;
+                  return <Tag color="default" style={{ fontWeight: 700 }}>BELUM AUDIT</Tag>;
                 }
                 return audit.valid ? (
-                  <Tag color="success">LEDGER VALID</Tag>
+                  <Tag color="success" style={{ fontWeight: 700 }}>LEDGER VALID</Tag>
                 ) : (
-                  <Tag color="error">RANTAI RUSAK!</Tag>
+                  <Tag color="error" style={{ fontWeight: 700 }}>RANTAI RUSAK!</Tag>
                 );
               },
             },
@@ -462,7 +467,7 @@ export default function GovernmentDashboard() {
                   ghost
                   loading={verifyingId === record.id}
                   onClick={() => handleVerifyCooperative(record.id, record.nama)}
-                  style={{ borderRadius: 4, fontWeight: 600 }}
+                  style={{ borderRadius: 6, fontWeight: 700 }}
                 >
                   AUDIT
                 </Button>

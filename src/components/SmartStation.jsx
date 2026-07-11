@@ -426,6 +426,10 @@ export default function SmartStation({ isOffline, systemState }) {
       message.warning('Keranjang masih kosong.');
       return;
     }
+    if (!selectedMember) {
+      message.warning('Silakan tap kartu RFID anggota terlebih dahulu untuk checkout.');
+      return;
+    }
     executeTransaction();
   };
 
@@ -580,8 +584,6 @@ export default function SmartStation({ isOffline, systemState }) {
       setIsSubmittingTitip(false);
     }
   };
-
-
 
   // Actual transaction execution
   const executeTransaction = async () => {
@@ -909,33 +911,35 @@ export default function SmartStation({ isOffline, systemState }) {
               ) : filteredProducts.length === 0 ? (
                 <Empty description="Tidak ada produk terdaftar di gerai ini." style={{ padding: '40px 0' }} />
               ) : (
-                <Row gutter={[16, 16]} style={{ maxHeight: '60vh', overflowY: 'auto', paddingRight: 4 }}>
+                <Row gutter={[12, 12]} style={{ maxHeight: '60vh', overflowY: 'auto', paddingRight: 4 }}>
                   {filteredProducts.map((p) => (
                     <Col xs={12} sm={8} key={p.id}>
                       <Card
                         hoverable
                         bordered
                         style={{
-                          borderRadius: 8,
+                          borderRadius: 12,
                           transition: 'all 0.2s',
-                          border: '1px solid #f1f5f9',
+                          border: '1px solid #e2e8f0',
                         }}
-                        bodyStyle={{ padding: 12 }}
+                        bodyStyle={{ padding: 14 }}
                         onClick={() => handleSelectProduct(p)}
+                        className="hover-lift-card"
                       >
-                        <Text strong style={{ fontSize: 13, display: 'block', height: 40, overflow: 'hidden' }}>
+                        <Text strong style={{ fontSize: 13, display: 'block', height: 40, overflow: 'hidden', color: '#1e293b' }}>
                           {p.nama}
                         </Text>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginTop: 12 }}>
-                          <Text style={{ color: '#dc2626', fontWeight: 700, fontSize: 14 }}>
+                          <Text style={{ color: '#059669', fontWeight: 800, fontSize: 15 }}>
                             {formatRupiah(p.harga)}
                           </Text>
                           <Text style={{ fontSize: 11, color: '#94a3b8' }}>
                             /{p.satuan}
                           </Text>
                         </div>
-                        <div style={{ marginTop: 6, fontSize: 11, color: '#64748b' }}>
-                          Stok: <Text strong>{p.stok}</Text>
+                        <div style={{ marginTop: 6, fontSize: 11, color: '#64748b', display: 'flex', justifyContent: 'space-between' }}>
+                          <span>Stok: <Text strong>{p.stok}</Text></span>
+                          {p.satuan === 'kg' && <Tag color="green" style={{ margin: 0, fontSize: 9, padding: '0 4px', height: 16, lineHeight: '14px' }}>SCALE</Tag>}
                         </div>
                       </Card>
                     </Col>
@@ -961,29 +965,29 @@ export default function SmartStation({ isOffline, systemState }) {
                   <Card
                     style={{
                       background: 'linear-gradient(135deg, #065f46 0%, #0d9488 100%)',
-                      borderRadius: 8,
+                      borderRadius: 12,
                       color: '#fff',
                       border: 'none',
-                      boxShadow: '0 4px 12px rgba(13, 148, 136, 0.2)',
+                      boxShadow: '0 8px 16px -4px rgba(13, 148, 136, 0.3)',
                     }}
-                    bodyStyle={{ padding: 16 }}
+                    bodyStyle={{ padding: 18 }}
                   >
                     <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 12 }}>
                       <div>
-                        <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 11, textTransform: 'uppercase' }}>
+                        <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 11, textTransform: 'uppercase', letterSpacing: 0.5 }}>
                           Anggota Koperasi
                         </Text>
-                        <div style={{ fontSize: 18, fontWeight: 700, marginTop: 2 }}>{selectedMember.nama}</div>
+                        <div style={{ fontSize: 18, fontWeight: 800, marginTop: 2, letterSpacing: 0.2 }}>{selectedMember.nama}</div>
                       </div>
-                      <Tag color="rgba(255,255,255,0.2)" style={{ color: '#fff', border: 'none', height: 22 }}>
+                      <Tag color="rgba(255,255,255,0.2)" style={{ color: '#fff', border: 'none', height: 22, fontWeight: 700 }}>
                         VERIFIED
                       </Tag>
                     </div>
-                    <div style={{ marginBottom: 12 }}>
-                      <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 10 }}>Saldo Simpanan</Text>
-                      <div style={{ fontSize: 22, fontWeight: 800 }}>{formatRupiah(selectedMember.saldo_simpanan)}</div>
+                    <div style={{ marginBottom: 14 }}>
+                      <Text style={{ color: 'rgba(255,255,255,0.7)', fontSize: 10 }}>SALDO SIMPANAN</Text>
+                      <div style={{ fontSize: 24, fontWeight: 900, color: '#f5e6c8' }}>{formatRupiah(selectedMember.saldo_simpanan)}</div>
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: 'rgba(255,255,255,0.8)' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 10, color: 'rgba(255,255,255,0.8)', fontFamily: 'monospace' }}>
                       <span>RFID: {selectedMember.rfid_card_id}</span>
                       <span>QR: {selectedMember.qr_code_id}</span>
                     </div>
@@ -992,101 +996,59 @@ export default function SmartStation({ isOffline, systemState }) {
                       danger
                       type="primary"
                       onClick={() => setSelectedMember(null)}
-                      style={{ marginTop: 16, width: '100%', borderRadius: 4, fontWeight: 600 }}
+                      style={{ marginTop: 16, width: '100%', borderRadius: 6, fontWeight: 700 }}
                     >
-                      GANTI ANGGOTA / GUEST CHECKOUT
+                      GANTI ANGGOTA
                     </Button>
                   </Card>
                 ) : (
-                  <div>
-                    <Tabs activeKey={activeTab} onChange={setActiveTab} centered>
-                      <Tabs.TabPane tab="RFID TAP" key="rfid">
-                        <div style={{ padding: '8px 0' }}>
-                          <Text style={{ fontSize: 12, color: '#64748b', display: 'block', marginBottom: 6 }}>
-                            Pilih kartu fisik anggota untuk di-tap:
-                          </Text>
-                          <Select
-                            style={{ width: '100%', marginBottom: 16 }}
-                            placeholder="Pilih Kartu Virtual RFID"
-                            value={selectedRfidId || undefined}
-                            onChange={setSelectedRfidId}
-                          >
-                            {anggotaList.map((a) => (
-                              <Option key={a.id} value={a.rfid_card_id}>
-                                {a.nama} ({a.rfid_card_id})
-                              </Option>
-                            ))}
-                          </Select>
+                  <div style={{ padding: '8px 0' }}>
+                    <Text style={{ fontSize: 12, color: '#64748b', display: 'block', marginBottom: 6 }}>
+                      Pilih kartu fisik anggota untuk di-tap:
+                    </Text>
+                    <Select
+                      style={{ width: '100%', marginBottom: 16 }}
+                      placeholder="Pilih Kartu Virtual RFID"
+                      value={selectedRfidId || undefined}
+                      onChange={setSelectedRfidId}
+                    >
+                      {anggotaList.map((a) => (
+                        <Option key={a.id} value={a.rfid_card_id}>
+                          {a.nama} ({a.rfid_card_id})
+                        </Option>
+                      ))}
+                    </Select>
 
-                          <div
-                            style={{
-                              background: '#f8fafc',
-                              border: '2px dashed #cbd5e1',
-                              borderRadius: 8,
-                              padding: 24,
-                              textAlign: 'center',
-                              cursor: 'pointer',
-                              transition: 'all 0.2s',
-                            }}
-                            onClick={handleRFIDTap}
-                          >
-                            {isRfidTapping ? (
-                              <Spin tip="Membaca Kartu RFID..." />
-                            ) : (
-                              <div>
-                                <div style={{ fontSize: 14, fontWeight: 800, color: '#64748b', marginBottom: 4 }}>
-                                  [ RFID READER SIMULATION ]
-                                </div>
-                                <div style={{ fontSize: 13, fontWeight: 600 }}>Klik untuk Tap Kartu Virtual</div>
-                                <Text style={{ fontSize: 11, color: '#94a3b8' }}>
-                                  (Mensimulasikan tap sensor fisik)
-                                </Text>
-                              </div>
-                            )}
+                    <div
+                      style={{
+                        background: '#f8fafc',
+                        border: '2px dashed #cbd5e1',
+                        borderRadius: 12,
+                        padding: 32,
+                        textAlign: 'center',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s',
+                      }}
+                      onClick={handleRFIDTap}
+                      className="rfid-tap-area"
+                    >
+                      {isRfidTapping ? (
+                        <Spin tip="Membaca Kartu RFID..." />
+                      ) : (
+                        <div>
+                          <div style={{ fontSize: 12, fontWeight: 800, color: '#64748b', marginBottom: 4, letterSpacing: 1.5 }}>
+                            RFID READER EMULATOR
                           </div>
-                          <div style={{ fontSize: 10, color: '#94a3b8', marginTop: 12 }}>
-                            <code>// SIMULASI: pengganti RFID reader (dropdown + sensor tap)</code>
-                          </div>
-                        </div>
-                      </Tabs.TabPane>
-
-                      <Tabs.TabPane tab="GUEST" key="manual">
-                        <div style={{ padding: '8px 0' }}>
-                          <Text style={{ fontSize: 12, color: '#64748b', display: 'block', marginBottom: 6 }}>
-                            Cari nama atau nomor kartu anggota di database:
+                          <div style={{ fontSize: 13, fontWeight: 700, color: '#0f172a' }}>TAP KARTU VIRTUAL</div>
+                          <Text style={{ fontSize: 11, color: '#94a3b8' }}>
+                            (Klik area ini untuk mensimulasikan sensor tap)
                           </Text>
-                          <Select
-                            showSearch
-                            style={{ width: '100%', marginBottom: 16 }}
-                            placeholder="Ketik nama atau RFID anggota..."
-                            optionFilterProp="children"
-                            onChange={(val) => {
-                              const found = anggotaList.find(a => a.id === val);
-                              if (found) {
-                                setSelectedMember(found);
-                                message.success(`Anggota dipilih: ${found.nama}`);
-                              }
-                            }}
-                            filterOption={(input, option) =>
-                              (option?.children ?? '').toLowerCase().includes(input.toLowerCase())
-                            }
-                          >
-                            {anggotaList.map((a) => (
-                              <Option key={a.id} value={a.id}>
-                                {a.nama} ({a.rfid_card_id || a.qr_code_id})
-                              </Option>
-                            ))}
-                          </Select>
-
-                          <Button style={{ width: '100%', fontWeight: 700, height: 38, borderRadius: 6 }} onClick={() => {
-                            setSelectedMember(null);
-                            message.success('Checkout dikonfigurasi sebagai Tamu (Guest).');
-                          }}>
-                            CHECKOUT SEBAGAI GUEST (TAMU)
-                          </Button>
                         </div>
-                      </Tabs.TabPane>
-                    </Tabs>
+                      )}
+                    </div>
+                    <div style={{ fontSize: 10, color: '#94a3b8', marginTop: 12 }}>
+                      <code>// SIMULASI: pengganti RFID reader (dropdown + sensor tap)</code>
+                    </div>
                   </div>
                 )}
               </Card>
@@ -1096,11 +1058,11 @@ export default function SmartStation({ isOffline, systemState }) {
                 bordered={false}
                 style={{ borderRadius: 12, boxShadow: '0 4px 6px -1px rgba(0,0,0,0.02)' }}
                 title={
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%' }}>
                     <span style={{ fontWeight: 800, fontSize: 16 }}>KERANJANG BELANJA</span>
                     {cart.length > 0 && (
-                      <Button type="text" danger onClick={clearCart} style={{ fontWeight: 600 }}>
-                        KOSONGKAN
+                      <Button type="text" danger onClick={clearCart} style={{ fontWeight: 700, padding: 0 }}>
+                        BERSIHKAN
                       </Button>
                     )}
                   </div>
@@ -1123,21 +1085,21 @@ export default function SmartStation({ isOffline, systemState }) {
                           }}
                         >
                           <div style={{ flex: 1, paddingRight: 8 }}>
-                            <div style={{ fontSize: 13, fontWeight: 600 }}>{item.nama}</div>
+                            <div style={{ fontSize: 13, fontWeight: 700, color: '#1e293b' }}>{item.nama}</div>
                             <div style={{ fontSize: 11, color: '#64748b' }}>
                               {formatRupiah(item.harga)}/{item.satuan}
                             </div>
                           </div>
                           <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginRight: 12 }}>
-                            <Button size="small" shape="circle" onClick={() => updateQty(item.id, -1)}>
+                            <Button size="small" shape="circle" onClick={() => updateQty(item.id, -1)} style={{ border: '1px solid #cbd5e1' }}>
                               -
                             </Button>
-                            <Text style={{ minWidth: 20, textAlign: 'center', fontWeight: 600 }}>{item.jumlah}</Text>
-                            <Button size="small" shape="circle" onClick={() => updateQty(item.id, 1)}>
+                            <Text style={{ minWidth: 24, textAlign: 'center', fontWeight: 700 }}>{item.jumlah}</Text>
+                            <Button size="small" shape="circle" onClick={() => updateQty(item.id, 1)} style={{ border: '1px solid #cbd5e1' }}>
                               +
                             </Button>
                           </div>
-                          <div style={{ fontWeight: 700, fontSize: 13, minWidth: 80, textAlign: 'right' }}>
+                          <div style={{ fontWeight: 800, fontSize: 13, minWidth: 80, textAlign: 'right', color: '#1e293b' }}>
                             {formatRupiah(item.harga * item.jumlah)}
                           </div>
                         </div>
@@ -1147,22 +1109,24 @@ export default function SmartStation({ isOffline, systemState }) {
                     <div
                       style={{
                         backgroundColor: '#f8fafc',
-                        padding: 12,
-                        borderRadius: 8,
+                        padding: 14,
+                        borderRadius: 10,
                         marginBottom: 16,
                         border: '1px solid #e2e8f0',
                       }}
                     >
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 4 }}>
-                        <Text style={{ color: '#64748b' }}>Metode Pembayaran:</Text>
-                        <Text strong>{selectedMember ? 'Saldo Simpanan Koperasi' : 'Tunai / Cash'}</Text>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 6, fontSize: 12 }}>
+                        <Text style={{ color: '#64748b' }}>Pembayaran:</Text>
+                        <Text strong style={{ color: selectedMember ? '#0f172a' : '#ef4444' }}>
+                          {selectedMember ? 'Saldo Simpanan Koperasi' : 'Silakan Tap Kartu RFID'}
+                        </Text>
                       </div>
-                      <Divider style={{ margin: '8px 0' }} />
+                      <Divider style={{ margin: '8px 0', borderStyle: 'dashed' }} />
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
                         <Text strong style={{ fontSize: 14 }}>
                           Total Belanja:
                         </Text>
-                        <Text style={{ color: '#059669', fontSize: 20, fontWeight: 800 }}>
+                        <Text style={{ color: '#059669', fontSize: 22, fontWeight: 900 }}>
                           {formatRupiah(cart.reduce((s, i) => s + i.harga * i.jumlah, 0))}
                         </Text>
                       </div>
@@ -1171,7 +1135,7 @@ export default function SmartStation({ isOffline, systemState }) {
                     <Button
                       type="primary"
                       size="large"
-                      style={{ width: '100%', height: 48, borderRadius: 6, fontWeight: 700 }}
+                      style={{ width: '100%', height: 48, borderRadius: 8, fontWeight: 700, fontSize: 14, background: 'linear-gradient(135deg, #059669 0%, #10b981 100%)', border: 'none' }}
                       onClick={handlePayCheckout}
                     >
                       PROSES BAYAR
